@@ -2,3 +2,5 @@
 .gradle
 *.iml
 target/test-classes
+target/classes
+
