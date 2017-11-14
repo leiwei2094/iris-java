@@ -3,4 +3,10 @@
 *.iml
 target/test-classes
 target/classes
+iris-client/target
+iris-core/target
+iris-protocol
+iris-registry
+iris-server
+
 

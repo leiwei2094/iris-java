@@ -7,6 +7,14 @@
     <groupId>com.leibangzhu</groupId>
     <artifactId>iris</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <modules>
+        <module>iris-core</module>
+        <module>iris-client</module>
+        <module>iris-protocol</module>
+        <module>iris-registry</module>
+        <module>iris-server</module>
+    </modules>
+    <packaging>pom</packaging>
 
 
     <properties>
@@ -18,12 +26,22 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
-
+    <dependencyManagement>
         <dependencies>
             <dependency>
                 <groupId>com.coreos</groupId>
                 <artifactId>jetcd-core</artifactId>
                 <version>0.0.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>io.netty</groupId>
+                        <artifactId>netty-codec-http2</artifactId>
+                    </exclusion>
+                    <exclusion>
+                        <groupId>io.netty</groupId>
+                        <artifactId>netty-handler-proxy</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -33,7 +51,7 @@
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-all</artifactId>
-                <version>4.0.36.Final</version>
+                <version>4.1.12.Final</version>
             </dependency>
             <dependency>
                 <groupId>net.bytebuddy</groupId>
@@ -56,4 +74,5 @@
                 <version>2.6</version>
             </dependency>
         </dependencies>
+    </dependencyManagement>
 </project>
