@@ -16,4 +16,8 @@ public interface IRegistry {
     List<Endpoint> find(String serviceName) throws Exception;
 
     void watch(IEventCallback callback);
+
+    void keepAlive();
+
+    //void watch();
 }

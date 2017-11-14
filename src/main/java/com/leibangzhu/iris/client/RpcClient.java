@@ -18,6 +18,7 @@ public class RpcClient implements IRpcClient {
     public RpcClient(IRegistry registry){
         this.registry = registry;
         this.connectManager = new ConnectManager(registry);
+        //this.registry.watch();
     }
 
     @Override

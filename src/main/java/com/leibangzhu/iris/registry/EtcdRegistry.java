@@ -42,9 +42,9 @@ public class EtcdRegistry implements IRegistry{
         this.kv      = client.getKVClient();
         this.watch   = client.getWatchClient();
         this.leaseId = lease.grant(30).get().getID();
-        System.out.println("New lease, id:" + leaseId + ", Hex format: " + Long.toHexString(leaseId));
-        keepAlive();
-        watch();
+        //System.out.println("New lease, id:" + leaseId + ", Hex format: " + Long.toHexString(leaseId));
+//        keepAlive();
+        //watch();
     }
 
     // 向ETCD中注册服务
@@ -58,7 +58,7 @@ public class EtcdRegistry implements IRegistry{
     }
 
     // 发送心跳到ETCD,表明该host是活着的
-    private void keepAlive(){
+    public void keepAlive(){
         Executors.newSingleThreadExecutor().submit(
                 () -> {
                     try {
@@ -107,6 +107,7 @@ public class EtcdRegistry implements IRegistry{
     @Override
     public void watch(IEventCallback callback) {
         this.callback = callback;
+        watch();
     }
 
     private void watch(){

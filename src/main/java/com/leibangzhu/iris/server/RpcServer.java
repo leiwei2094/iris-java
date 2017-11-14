@@ -25,7 +25,9 @@ public class RpcServer {
 
     public RpcServer exposeService(Class<?> clazz,Object handler) throws Exception {
         handlerMap.put(clazz.getName(),handler);
-        registry.register(clazz.getName(),port);
+//        registry.register(clazz.getName(),port);
+        registry.keepAlive();
+
         return this;
     }
 
@@ -45,6 +47,11 @@ public class RpcServer {
                 .option(ChannelOption.SO_BACKLOG,128)
                 .childOption(ChannelOption.SO_KEEPALIVE,true);
         ChannelFuture future = bootstrap.bind(port).sync();
+
+        for (String className : handlerMap.keySet()){
+            registry.register(className,port);
+        }
+
         future.channel().closeFuture().sync();
     }
 }
