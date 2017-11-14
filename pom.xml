@@ -30,5 +30,30 @@
                 <artifactId>junit</artifactId>
                 <version>4.12</version>
             </dependency>
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>4.0.36.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>net.bytebuddy</groupId>
+                <artifactId>byte-buddy</artifactId>
+                <version>1.7.9</version>
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-core</artifactId>
+                <version>1.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>io.protostuff</groupId>
+                <artifactId>protostuff-runtime</artifactId>
+                <version>1.5.2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.objenesis</groupId>
+                <artifactId>objenesis</artifactId>
+                <version>2.6</version>
+            </dependency>
         </dependencies>
 </project>
