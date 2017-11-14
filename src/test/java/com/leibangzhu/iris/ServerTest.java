@@ -13,7 +13,7 @@ public class ServerTest {
     public void test() throws Exception {
         IRegistry registry = new EtcdRegistry("http://127.0.0.1:2379");
         RpcServer server = new RpcServer(registry)
-                .port(2000)
+                .port(2017)
                 .exposeService(IHelloService.class,new HelloService());
         server.run();
     }

@@ -4,12 +4,24 @@ import com.leibangzhu.iris.core.KeyValue;
 
 public class RegistryEvent {
 
+    public KeyValue<String, String> getPreKeyValue() {
+        return preKeyValue;
+    }
+
+    public KeyValue<String, String> getKeyValue() {
+        return keyValue;
+    }
+
     private KeyValue<String,String> preKeyValue = new KeyValue<>();
     private KeyValue<String,String> keyValue = new KeyValue<>();
     private EventType eventType = EventType.UNRECOGNIZED;
 
     public static RegistryEventBuilder newBuilder(){
         return new RegistryEventBuilder();
+    }
+
+    public EventType getEventType() {
+        return eventType;
     }
 
     public static class RegistryEventBuilder{

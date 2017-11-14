@@ -37,6 +37,12 @@ public class RpcInvokeInterceptor {
 
         channel.writeAndFlush(request);
 
-        return future.get();
+        Object result = null;
+        try {
+            result = future.get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return result;
     }
 }

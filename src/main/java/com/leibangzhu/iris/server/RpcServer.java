@@ -15,7 +15,7 @@ public class RpcServer {
 
     private String host = "127.0.0.1";
     private IRegistry registry;
-    private int port = 2100;
+    private int port = 2017;
 
     private Map<String,Object> handlerMap = new LinkedHashMap<>();
 

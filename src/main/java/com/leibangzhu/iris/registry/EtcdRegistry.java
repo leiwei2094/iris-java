@@ -59,16 +59,14 @@ public class EtcdRegistry implements IRegistry{
 
     // 发送心跳到ETCD,表明该host是活着的
     private void keepAlive(){
-        Executors.newSingleThreadScheduledExecutor().scheduleAtFixedRate(
+        Executors.newSingleThreadExecutor().submit(
                 () -> {
                     try {
-                        long before = lease.timeToLive(leaseId, LeaseOption.DEFAULT).get().getTTl();
-                        lease.keepAlive(leaseId).listen();
-                        long after = lease.timeToLive(leaseId, LeaseOption.DEFAULT).get().getTTl();
-                        System.out.println("KeepAlive lease:" + leaseId + "; Hex format:" + Long.toHexString(leaseId) + ";" + before + " => " + after );
+                        Lease.KeepAliveListener listener = lease.keepAlive(leaseId);
+                        listener.listen();
+                        System.out.println("KeepAlive lease:" + leaseId + "; Hex format:" + Long.toHexString(leaseId));
                     } catch (Exception e) { e.printStackTrace(); }
                 }
-                ,10,10, TimeUnit.SECONDS
         );
     }
 
