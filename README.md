@@ -35,10 +35,10 @@ public class HelloService implements IHelloService {
 4. 启动Server
 ```java
 IRegistry registry = new EtcdRegistry("http://127.0.0.1:2379");
-        RpcServer server = new RpcServer(registry)
-                .port(2017)
-                .exposeService(IHelloService.class,new HelloService());
-        server.run();
+RpcServer server = new RpcServer(registry)
+        .port(2017)
+        .exposeService(IHelloService.class,new HelloService());
+server.run();
 ```
 5. 启动client
 ```java
