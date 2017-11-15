@@ -6,9 +6,11 @@
 * 注册中心: etcd
 * 动态代理: byte-buddy
 * 序列化: Protobuff(Protostuff)
+* 可以脱离Spring，提供API调用。
 
 
 # Todo:
+* 添加优雅停机
 * 添加Spring支持
 * 添加Spring Boot的Starter
 * 添加Prometheus监控
@@ -48,12 +50,13 @@ String s = helloService.hello("leo");
 System.out.println(s);   // hello, leo
 ```
 6. 停止server
-
+```text
 因为服务没有provider，client报错找不到provider        
+```
 7. 启动server        
-
+```text
 server启动后，会去etcd注册中心注册服务，client端马上正常工作。        
-
+```
 
 # Why iris
 `iris`取名于梵高的画**鸢尾花**
