@@ -8,12 +8,45 @@
 * 序列化: Protobuff(Protostuff)
 
 
-Todo:
+# Todo:
 * 添加Spring支持
 * 添加Spring Boot的Starter
 * 添加Prometheus监控
 * 更好的支持容器环境
 
+
+# How to use
+1. 启动etcd注册中心
+2. 编写一个接口IHelloService
+```java
+public interface IHelloService {
+    String hello(String name);
+}
+```
+3. 编写一个IHelloService的实现
+```java
+public class HelloService implements IHelloService {
+    @Override
+    public String hello(String name){
+        return "Hello, " + name;
+    }
+}
+```
+4. 启动Server
+```java
+IRegistry registry = new EtcdRegistry("http://127.0.0.1:2379");
+        RpcServer server = new RpcServer(registry)
+                .port(2017)
+                .exposeService(IHelloService.class,new HelloService());
+        server.run();
+```
+5. 启动client
+```java
+RpcClient client = new RpcClient(registry);
+IHelloService helloService = client.create(IHelloService.class);
+String s = helloService.hello("leo");
+System.out.println(s);   // hello, leo
+```
 
 # Why iris
 `iris`取名于梵高的画**鸢尾花**
