@@ -13,7 +13,7 @@
 * 添加优雅停机
 * 添加Spring支持
 * 添加Spring Boot的Starter
-* 添加Prometheus监控
+* 添加监控系统，使用Prometheus
 * 更好的支持容器环境
 
 
