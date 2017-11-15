@@ -47,10 +47,12 @@ IHelloService helloService = client.create(IHelloService.class);
 String s = helloService.hello("leo");
 System.out.println(s);   // hello, leo
 ```
-6. 停止server        
-因为服务没有provider，client报错找不到provider
+6. 停止server
+
+因为服务没有provider，client报错找不到provider        
 7. 启动server        
-server启动后，会去etcd注册中心注册服务，client端马上正常工作。
+
+server启动后，会去etcd注册中心注册服务，client端马上正常工作。        
 
 
 # Why iris
