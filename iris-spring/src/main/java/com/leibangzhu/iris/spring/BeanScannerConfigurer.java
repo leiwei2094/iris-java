@@ -21,6 +21,6 @@ public class BeanScannerConfigurer implements BeanFactoryPostProcessor, Applicat
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         Scanner scanner = new Scanner((BeanDefinitionRegistry) beanFactory);
         scanner.setResourceLoader(this.applicationContext);
-        scanner.scan("com.leibangzhu.sample.spring.beandefinition.customizescan");
+        scanner.scan("com.leibangzhu.iris.spring");
     }
 }

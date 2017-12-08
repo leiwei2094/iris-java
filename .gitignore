@@ -8,5 +8,6 @@ iris-core/target
 iris-protocol
 iris-registry
 iris-server
+iris-spring/target
 
 

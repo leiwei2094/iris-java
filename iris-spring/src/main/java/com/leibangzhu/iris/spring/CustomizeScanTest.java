@@ -3,11 +3,15 @@ package com.leibangzhu.iris.spring;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+@ComponentScan
+@Configuration
 public class CustomizeScanTest {
 
     public static void main(String[] args) throws Exception {
