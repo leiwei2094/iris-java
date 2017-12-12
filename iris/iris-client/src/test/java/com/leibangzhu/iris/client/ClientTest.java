@@ -3,11 +3,13 @@ package com.leibangzhu.iris.client;
 import com.leibangzhu.iris.core.IHelloService;
 import com.leibangzhu.iris.registry.EtcdRegistry;
 import com.leibangzhu.iris.registry.IRegistry;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+@Ignore
 public class ClientTest {
 
     @Test
@@ -38,5 +40,16 @@ public class ClientTest {
         },5,3, TimeUnit.SECONDS);
 
         Thread.sleep(3000 * 1000);
+    }
+
+
+    @Test
+    public void test2() throws Exception {
+        IRegistry registry = new EtcdRegistry("http://127.0.0.1:2379");
+        RpcClient client = new RpcClient(registry);
+
+        com.leibangzhu.iris.demoa.api.IHelloService helloService = client.create(com.leibangzhu.iris.demoa.api.IHelloService.class);
+        String s = helloService.sayHello("haha");
+        System.out.println(s);
     }
 }

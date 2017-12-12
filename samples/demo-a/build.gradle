@@ -1,0 +1,20 @@
+plugins {
+    id "io.spring.dependency-management" version "1.0.3.RELEASE"
+}
+
+group 'com.leibangzhu.iris'
+version '1.0.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url "http://114.55.36.61:8087/nexus/content/groups/public/" }
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}

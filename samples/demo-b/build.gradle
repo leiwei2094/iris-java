@@ -1,0 +1,47 @@
+plugins {
+    id 'org.springframework.boot' version '1.5.7.RELEASE'
+    id 'java'
+}
+
+repositories {
+    maven { url "http://114.55.36.61:8087/nexus/content/groups/public/" }
+    mavenLocal()
+    mavenCentral()
+    maven { url "http://repo.spring.io/snapshot" }
+    maven { url "http://repo.spring.io/milestone" }
+}
+
+dependencies {
+    compile("com.leibangzhu:iris-spring:1.0-SNAPSHOT")
+    compile("com.leibangzhu:iris-client:1.0-SNAPSHOT")
+    compile("com.leibangzhu.iris:demo-a-api:1.0.0-SNAPSHOT")
+
+    compile("org.springframework.boot:spring-boot-starter-web")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+}
+
+sourceCompatibility = 1.8
+
+allprojects {
+    configurations.all {
+        // check for updates every build
+        resolutionStrategy.cacheChangingModulesFor(0, 'seconds')
+    }
+}
+
+springBoot {
+    executable = true
+}
+
+dependencyManagement {
+    resolutionStrategy {
+        cacheChangingModulesFor 0, 'seconds'
+    }
+
+//    imports {
+//        mavenBom 'com.qibeitech:qibei-bom:1.1.0-SNAPSHOT'
+//    }
+}
+
+group 'com.leibangzhu.iris'
+version '1.0.0-SNAPSHOT'

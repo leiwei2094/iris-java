@@ -1,0 +1,26 @@
+group 'com.leibangzhu.iris'
+version '1.0.0-SNAPSHOT'
+//description 'iris-sample-api'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+uploadArchives {
+    repositories {
+        mavenLocal()
+//        mavenDeployer {
+//            repository(url: "file://Users/leiwei/.m2/repository")
+//        }
+    }
+}
