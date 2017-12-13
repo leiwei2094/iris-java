@@ -6,6 +6,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Reference {
-    String value() default "";
     Class<?> interfaceClass();
 }
