@@ -2,8 +2,6 @@ package com.leibangzhu.iris.spring;
 
 import com.leibangzhu.iris.client.RpcClient;
 import com.leibangzhu.iris.core.annotation.Reference;
-import com.leibangzhu.iris.core.annotation.Service;
-import com.leibangzhu.iris.server.RpcServer;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.ApplicationContext;

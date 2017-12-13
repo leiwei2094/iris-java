@@ -10,10 +10,6 @@ public class XmlClient {
         baz.hello("leo");
         baz.hello("tom");
 
-//        server.port(2017);
-//        server.run();
-
         Thread.sleep(100 * 1000);
-
     }
 }
