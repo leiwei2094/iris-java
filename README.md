@@ -13,7 +13,7 @@
 * 支持优雅停机
 * 集成Spring，提供XML，Java配置
 * 支持服务延迟暴露
-* 提供SPI机制，实现可扩展，其他第三方开发者可以为iris开发组件，以插件的形式缝集成到iris中
+* 提供SPI机制，实现可扩展，其他第三方开发者可以为iris开发组件，以插件的形式缝集成到iris中。见[coco](https://github.com/Leo-Lei/coco)项目
 * 集成Spring Boot，提供一个Spring Boot Starter
 * 添加监控系统，使用Prometheus
 * 更好的支持容器环境
