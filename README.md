@@ -20,11 +20,10 @@
 
 
 # How to use
-
-
-
-
-
+iris支持以下使用方式:    
+1. 原生API形式，不依赖Spring,非Spring项目也可以使用
+2. Spring配置方式，和Spring很好的集成
+3. Spring Boot配置方式，提供了一个spring boot starter，以自动配置，快速启动
 
 
 # API使用
@@ -71,7 +70,7 @@ server启动后，会去etcd注册中心注册服务，client端马上正常工�
 
 # Spring配置
 
-
+服务提供者，使用自定义注解@Service来暴露服务，通过interfaceClass来指定服务的接口
 ```java
 @Service(interfaceClass = IHelloService.class)
 public class HelloService implements IHelloService {
@@ -82,6 +81,7 @@ public class HelloService implements IHelloService {
 }
 ```
 
+服务使用者，通过@Reference来引用远程服务，就像使用本地的SpringBean一样。背后的SpringBean封装和Rpc调用对开发者透明。
 ```java
 public class Baz {
 
@@ -94,7 +94,7 @@ public class Baz {
 }
 
 ```
-
+配置服务提供者，本例子使用XML配置，使用Java Code配置也可以。
 ```xml
 <bean id="registry" class="com.leibangzhu.iris.registry.EtcdRegistry">
         <constructor-arg name="registryAddress" value="http://127.0.0.1:2379"></constructor-arg>
@@ -108,7 +108,7 @@ public class Baz {
 
     <bean id="helloService" class="com.leibangzhu.iris.spring.HelloService"></bean>
 ```
-
+配置服务消费者，本例子使用XML配置，使用Java Code配置也可以。
 ```xml
 <bean id="registry" class="com.leibangzhu.iris.registry.EtcdRegistry">
         <constructor-arg name="registryAddress" value="http://127.0.0.1:2379"></constructor-arg>
@@ -126,7 +126,7 @@ public class Baz {
 ```
 
 # Spring Boot配置
-
+服务提供者
 ```java
 @Service(interfaceClass = IHelloService.class)
 public class HelloService implements IHelloService {
@@ -136,7 +136,7 @@ public class HelloService implements IHelloService {
     }
 }
 ```
-
+服务消费者
 ```java
 @Component
 public class Foo {
@@ -150,26 +150,21 @@ public class Foo {
 }
 ```
 
+在application.properties文件中配置服务消费者
 ```properties
 iris.registry.address=http://127.0.0.1:2379
 
 iris.client.enable=true
 ```
 
-
-```java
+在application.properties文件中配置服务提供者
+```properties
 iris.registry.address=http://127.0.0.1:2379
 
 iris.server.enable=true
 iris.server.port=2017
 iris.annotation.package=com.leibangzhu.iris.springboot
 ```
-
-
-
-
-
-
 
 # Why iris
 `iris`取名于梵高的画**鸢尾花**
