@@ -69,7 +69,8 @@ server启动后，会去etcd注册中心注册服务，client端马上正常工�
 
 # Spring配置
 
-服务提供者，使用自定义注解@Service来暴露服务，通过interfaceClass来指定服务的接口
+服务提供者，使用自定义注解@Service来暴露服务，通过interfaceClass来指定服务的接口。        
+该@Service注解是iris提供的，并非Spring的注解
 ```java
 @Service(interfaceClass = IHelloService.class)
 public class HelloService implements IHelloService {
