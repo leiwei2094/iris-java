@@ -9,12 +9,12 @@
 * 可以脱离Spring，提供API调用。
 * 集成Spring，提供XML，Java配置
 * 提供Spring Boot Starter
+* 提供SPI机制，实现微内核加插件的架构。实现可扩展，其他第三方开发者可以为iris开发组件，以插件的形式缝集成到iris中。使用另一个微容器框架见[coco](https://github.com/Leo-Lei/coco)项目
 
 # Todo:
 * 支持优雅停机
 * 支持服务延迟暴露
 * 支持超时和重试配置
-* 提供SPI机制，实现微内核加插件的架构。实现可扩展，其他第三方开发者可以为iris开发组件，以插件的形式缝集成到iris中。使用另一个微容器框架见[coco](https://github.com/Leo-Lei/coco)项目
 * 添加监控系统，使用Prometheus
 * 更好的支持容器环境
 
@@ -165,6 +165,24 @@ iris.registry.address=http://127.0.0.1:2379
 iris.server.enable=true
 iris.server.port=2017
 iris.annotation.package=com.leibangzhu.iris.springboot
+```
+
+# 如何扩展
+Iris使用了SPI机制，实现了微内核加插件的架构。Iris里的每个组件都有很多的扩展点，内置了一些扩展点的实现，使用者可以自由选择使用哪种实现。使用者也可以自己开发一个扩展点的实现，并注入到Iris中。        
+Iris中的服务提供者有多个，client端调用的时候，有一个负载均衡的策略。Iris默认有2个实现：随机的和每次都选择第一个。默认是随机。如果想使用每次都选择第一个，只需要在iris.properties或application.properties中添加配置：
+```properties
+iris.loadbalance=first
+```
+
+如果想自己实现一个负载均衡的策略，比如轮训，需要：
+写一个类RoundRobinLoadBalance，实现Iris的ILoadBalance接口。
+在classpath中添加一个文件：
+/META-INF/extensions/com.leibangzhu.iris.core.loadbalande.ILoadBalance
+roundrobin=com.mycompany.foo.bar.RoundRobinLoadBalance
+
+在iris.properties或application.properties中添加配置：
+```properties
+iris.loadbalance=roundrobin
 ```
 
 # Why iris
