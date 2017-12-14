@@ -1,13 +1,4 @@
 .idea
 .gradle
 *.iml
-target/test-classes
-target/classes
-iris-client/target
-iris-core/target
-iris-protocol
-iris-registry
-iris-server
-iris-spring/target
-iris-spring-boot/target
 

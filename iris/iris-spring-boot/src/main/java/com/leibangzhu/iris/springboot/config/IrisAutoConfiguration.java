@@ -36,7 +36,7 @@ public class IrisAutoConfiguration {
 
     @ConditionalOnProperty(prefix = "iris.server", value = "enable",havingValue = "true")
     @Bean
-    public ServiceAnnotationBeanFactoryPostProcessor beanFactoryPostProcessor(@Value("${iris.annotation.package}") String packageName){
+    public static ServiceAnnotationBeanFactoryPostProcessor beanFactoryPostProcessor(@Value("${iris.annotation.package}") String packageName){
         ServiceAnnotationBeanFactoryPostProcessor processor = new ServiceAnnotationBeanFactoryPostProcessor(packageName);
         return processor;
     }
