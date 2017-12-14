@@ -175,12 +175,13 @@ iris.loadbalance=first
 ```
 
 如果想自己实现一个负载均衡的策略，比如轮训，需要：
-写一个类RoundRobinLoadBalance，实现Iris的ILoadBalance接口。
+写一个类`RoundRobinLoadBalance`，实现Iris的`ILoadBalance`接口。
 在classpath中添加一个文件：
+```properties
 /META-INF/extensions/com.leibangzhu.iris.core.loadbalande.ILoadBalance
 roundrobin=com.mycompany.foo.bar.RoundRobinLoadBalance
-
-在iris.properties或application.properties中添加配置：
+```
+在`iris.properties`或`application.properties`中添加配置：
 ```properties
 iris.loadbalance=roundrobin
 ```
