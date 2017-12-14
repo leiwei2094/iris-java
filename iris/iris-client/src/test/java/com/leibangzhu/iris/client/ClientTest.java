@@ -48,8 +48,8 @@ public class ClientTest {
         IRegistry registry = new EtcdRegistry("http://127.0.0.1:2379");
         RpcClient client = new RpcClient(registry);
 
-        com.leibangzhu.iris.demoa.api.IHelloService helloService = client.create(com.leibangzhu.iris.demoa.api.IHelloService.class);
-        String s = helloService.sayHello("haha");
+        com.leibangzhu.iris.core.IHelloService helloService = client.create(com.leibangzhu.iris.core.IHelloService.class);
+        String s = helloService.hello("haha");
         System.out.println(s);
     }
 }

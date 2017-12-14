@@ -32,7 +32,10 @@
             <artifactId>iris-client</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>net.bytebuddy</groupId>
+            <artifactId>byte-buddy</artifactId>
+        </dependency>
     </dependencies>
-
 
 </project>
