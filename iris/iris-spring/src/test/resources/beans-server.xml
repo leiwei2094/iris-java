@@ -6,6 +6,7 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:annotation-config></context:annotation-config>
+    <context:property-placeholder location="classpath:/iris.properties"></context:property-placeholder>
 
     <bean id="registry" class="com.leibangzhu.iris.registry.EtcdRegistry">
         <constructor-arg name="registryAddress" value="http://127.0.0.1:2379"></constructor-arg>

@@ -1,0 +1,2 @@
+random=com.leibangzhu.iris.core.loadbalance.RandomLoadBalance
+first=com.leibangzhu.iris.core.loadbalance.SelectFirstLoadBalance

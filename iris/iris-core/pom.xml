@@ -17,6 +17,10 @@
             <groupId>com.leibangzhu</groupId>
             <artifactId>coco</artifactId>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

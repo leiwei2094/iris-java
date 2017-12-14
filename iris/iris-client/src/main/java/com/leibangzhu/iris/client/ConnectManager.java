@@ -1,6 +1,9 @@
 package com.leibangzhu.iris.client;
 
+import com.leibangzhu.coco.ExtensionLoader;
 import com.leibangzhu.iris.core.Endpoint;
+import com.leibangzhu.iris.core.IrisConfig;
+import com.leibangzhu.iris.core.loadbalance.ILoadBalance;
 import com.leibangzhu.iris.registry.IEventCallback;
 import com.leibangzhu.iris.registry.IRegistry;
 import com.leibangzhu.iris.registry.RegistryEvent;
@@ -37,10 +40,15 @@ public class ConnectManager implements IConnectManager,IEventCallback{
 
         // select one channel from all available channels
         int size = channelsByService.get(serviceName).size();
+        ILoadBalance loadBalance = ExtensionLoader.getExtensionLoader(ILoadBalance.class).getAdaptiveInstance();
         if ( 0 == size){
             System.out.println("NO available providers for service: " + serviceName);
         }
-        int index = (roundRobin.getAndAdd(1) + size) % size;
+        //int index = (roundRobin.getAndAdd(1) + size) % size;
+        String loadbalance = IrisConfig.get("iris.loadbalance");
+        Map<String,String> map = new LinkedHashMap<>();
+        map.put("loadbalance",loadbalance);
+        int index = loadBalance.select(map,size);
         return channelsByService.get(serviceName).get(index).getChannel();
     }
 

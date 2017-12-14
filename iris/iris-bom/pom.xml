@@ -19,7 +19,7 @@
         <byte-buddy.version>1.7.9</byte-buddy.version>
         <protostuff.version>1.5.2</protostuff.version>
         <objenesis.version>2.6</objenesis.version>
-        <com.leibangzhu.coco.version>1.0-SNAPSHOT</com.leibangzhu.coco.version>
+        <com.leibangzhu.coco.version>0.0.1-SNAPSHOT</com.leibangzhu.coco.version>
         <spring.version>4.3.13.RELEASE</spring.version>
         <springboot.version>1.5.9.RELEASE</springboot.version>
     </properties>
