@@ -13,7 +13,8 @@
 # Todo:
 * 支持优雅停机
 * 支持服务延迟暴露
-* 提供SPI机制，实现可扩展，其他第三方开发者可以为iris开发组件，以插件的形式缝集成到iris中。见[coco](https://github.com/Leo-Lei/coco)项目
+* 支持超时和重试配置
+* 提供SPI机制，实现微内核加插件的架构。实现可扩展，其他第三方开发者可以为iris开发组件，以插件的形式缝集成到iris中。使用另一个微容器框架见[coco](https://github.com/Leo-Lei/coco)项目
 * 添加监控系统，使用Prometheus
 * 更好的支持容器环境
 
