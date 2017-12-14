@@ -20,6 +20,14 @@
 
 
 # How to use
+
+
+
+
+
+
+
+# API使用
 1. 启动etcd注册中心
 2. 编写一个接口IHelloService
 ```java
@@ -59,6 +67,109 @@ System.out.println(s);   // hello, leo
 ```text
 server启动后，会去etcd注册中心注册服务，client端马上正常工作。        
 ```
+
+
+# Spring配置
+
+
+```java
+@Service(interfaceClass = IHelloService.class)
+public class HelloService implements IHelloService {
+    @Override
+    public String hello(String name) throws Exception {
+        return "hello" + name;
+    }
+}
+```
+
+```java
+public class Baz {
+
+    @Reference(interfaceClass = IHelloService.class)
+    private IHelloService helloService;
+
+    public void hello(String name) throws Exception {
+        System.out.println(helloService.hello(name));
+    }
+}
+
+```
+
+```xml
+<bean id="registry" class="com.leibangzhu.iris.registry.EtcdRegistry">
+        <constructor-arg name="registryAddress" value="http://127.0.0.1:2379"></constructor-arg>
+    </bean>
+
+    <bean id="server" class="com.leibangzhu.iris.server.RpcServer">
+        <constructor-arg name="registry" ref="registry"></constructor-arg>
+    </bean>
+
+    <bean id="serviceAnnotationBeanPostProcessor" class="com.leibangzhu.iris.spring.ServiceAnnotationBeanPostProcessor"></bean>
+
+    <bean id="helloService" class="com.leibangzhu.iris.spring.HelloService"></bean>
+```
+
+```xml
+<bean id="registry" class="com.leibangzhu.iris.registry.EtcdRegistry">
+        <constructor-arg name="registryAddress" value="http://127.0.0.1:2379"></constructor-arg>
+    </bean>
+
+    <bean id="client" class="com.leibangzhu.iris.client.RpcClient">
+        <constructor-arg name="registry" ref="registry"></constructor-arg>
+    </bean>
+
+    <bean id="referenceAnnotationBeanPostProcessor" class="com.leibangzhu.iris.spring.ReferenceAnnotationBeanPostProcessor"></bean>
+
+    <!--<bean id="helloService" class="com.leibangzhu.iris.spring.HelloService"></bean>-->
+
+    <bean id="foo" class="com.leibangzhu.iris.spring.Baz"></bean>
+```
+
+# Spring Boot配置
+
+```java
+@Service(interfaceClass = IHelloService.class)
+public class HelloService implements IHelloService {
+    @Override
+    public String hello(String name) throws Exception {
+        return "Hello, " + name + ", from com.leibangzhu.iris.springboot.HelloService";
+    }
+}
+```
+
+```java
+@Component
+public class Foo {
+
+    @Reference(interfaceClass = IHelloService.class)
+    private IHelloService helloService;
+
+    public String hello(String name) throws Exception {
+        return helloService.hello(name);
+    }
+}
+```
+
+```properties
+iris.registry.address=http://127.0.0.1:2379
+
+iris.client.enable=true
+```
+
+
+```java
+iris.registry.address=http://127.0.0.1:2379
+
+iris.server.enable=true
+iris.server.port=2017
+iris.annotation.package=com.leibangzhu.iris.springboot
+```
+
+
+
+
+
+
 
 # Why iris
 `iris`取名于梵高的画**鸢尾花**
