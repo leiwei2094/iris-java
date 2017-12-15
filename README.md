@@ -200,6 +200,7 @@ random=com.leibangzhu.iris.core.loadbalance.RandomLoadBalance
 ILoadBalance loadBalance = ExtensionLoader.getExtensionLoader(ILoadBalance.class).getAdaptiveInstance();
 // get runtime configuration and load config to map
 // get actual loadbalance from iris.properties or application.properties file
+String loadbalance = IrisConfig.getLoadbalance();
 map.put("loadbalance",loadbalance)
 loadBalance.select(map,size);
 ```
