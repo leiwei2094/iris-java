@@ -167,24 +167,62 @@ iris.server.port=2017
 iris.annotation.package=com.leibangzhu.iris.springboot
 ```
 
-# 如何扩展
-Iris使用了SPI机制，实现了微内核加插件的架构。Iris里的每个组件都有很多的扩展点，内置了一些扩展点的实现，使用者可以自由选择使用哪种实现。使用者也可以自己开发一个扩展点的实现，并注入到Iris中。        
-Iris中的服务提供者有多个，client端调用的时候，有一个负载均衡的策略。Iris默认有2个实现：随机的和每次都选择第一个。默认是随机。如果想使用每次都选择第一个，只需要在iris.properties或application.properties中添加配置：
+# Iris的微内核加插件机制
+Iris使用了SPI机制，实现了微内核加插件的架构。
+Iris里的许多功能都是以插件的形式加载的。一个功能点就是一个扩展点，就是一个接口。通过注入的方式，将某个实现注入到Iris中。        
+扩展点的加载没有使用第三方的容器，比如Spring，而是自己实现了一个轻量级的容器。对Java的SPI机制进行了一下扩展和加强。        
+每个扩展点会有多个实现，开发者可以自己配置使用哪个，比如使用zookeeper注册中心或etcd注册中心。
+Iris内置的扩展实现满足大部分要求，开发者也可以自己编写扩展点的实现，加载到Iris中。
+Iris会扫描classpath下面的`/META/extensions`文件夹中的文件，读取扩展点信息，然后运行时动态加载。
+### 一个负载均衡器的Demo
+Iris中的服务提供者有多个，client端调用的时候，有一个负载均衡的策略。
+Iris目前提供了1个实现：随机选择一个提供者。以后会提供更多的负载均衡策略。如果有多个，只需要在iris.properties或application.properties中添加配置：
 ```properties
-iris.loadbalance=first
+iris.loadbalance=random
 ```
 
-如果想自己实现一个负载均衡的策略，比如轮训，需要：
-写一个类`RoundRobinLoadBalance`，实现Iris的`ILoadBalance`接口。
-在classpath中添加一个文件：
+如果想自己实现一个负载均衡的策略，比如轮询，需要：
+写一个类`RoundRobinLoadBalance`，实现Iris提供的的`ILoadBalance`接口。
+```java
+@Extension(defaultValue = "random")
+public interface ILoadBalance {
+    int select(@Adaptive("loadbalance")Map<String,String> config,int amount) throws Exception;
+}
+```
+* @Extension注解声明这是一个扩展点
+* defaultValue表示默认使用random这个扩展点实现
+* @Adaptive注解声明这是一个自适应扩展方法，会根据运行时信息动态选择对应的扩展点实现。类似于一个动态代理。
+`/src/main/resources/META-INF/extensions/com.leibangzhu.iris.core.loadbalance.ILoadBalance`文件的内容:
+```text
+random=com.leibangzhu.iris.core.loadbalance.RandomLoadBalance
+```
+* 所有的扩展点元数据文件都在`/META-INF/extensions`文件夹下，文件名是实现的扩展点的接口的全类名。
+* 文件的内容是key=value的形式。key是扩展点实现的name，value是实现类的全类名。实现类是一个简单的Java类，不依赖任何第三方接口和注解。
+* 使用时通过ExtensionLoader加载对应的插件
+* ExtensionLoader支持类似于Spring的IoC和AoP功能。即，扩展点中可以自动装配其他的扩展点。
+
+
+### 扩展自己的负载均衡器
+开发者想使用轮询的负载均衡策略，可以按照以下步骤来扩展：
+1. 编写一个类，实现ILoadBalance接口
+```java
+public class RoundRobinLoadBalance implements ILoadBalance {
+    @Override
+    public int select(Map<String, String> config, int amount) throws Exception {
+        // put your code here ...
+    }
+}
+```
+2. 在classpath中添加一个文件：
+`/META-INF/extensions/com.leibangzhu.iris.core.loadbalande.ILoadBalance`
 ```properties
-/META-INF/extensions/com.leibangzhu.iris.core.loadbalande.ILoadBalance
 roundrobin=com.mycompany.foo.bar.RoundRobinLoadBalance
 ```
-在`iris.properties`或`application.properties`中添加配置：
+3. 在`iris.properties`或`application.properties`中添加配置：
 ```properties
 iris.loadbalance=roundrobin
 ```
+这样，Iris就会使用我们自定义的轮询负载均衡了。
 
 # Why iris
 `iris`取名于梵高的画**鸢尾花**
