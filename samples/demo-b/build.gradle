@@ -4,7 +4,7 @@ plugins {
 }
 
 repositories {
-    maven { url "http://114.55.36.61:8087/nexus/content/groups/public/" }
+    maven { url "http://100.100.100.100:8087/nexus/content/groups/public/" }
     mavenLocal()
     mavenCentral()
     maven { url "http://repo.spring.io/snapshot" }

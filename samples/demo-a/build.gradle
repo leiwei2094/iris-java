@@ -10,7 +10,7 @@ apply plugin: 'java'
 sourceCompatibility = 1.8
 
 repositories {
-    maven { url "http://114.55.36.61:8087/nexus/content/groups/public/" }
+    maven { url "http://100.100.100.100:8087/nexus/content/groups/public/" }
     mavenLocal()
     mavenCentral()
 }
