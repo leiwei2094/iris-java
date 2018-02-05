@@ -49,7 +49,9 @@ public class ConnectManager implements IConnectManager,IEventCallback{
         Map<String,String> map = new LinkedHashMap<>();
         map.put("loadbalance",loadbalance);
         int index = loadBalance.select(map,size);
-        return channelsByService.get(serviceName).get(index).getChannel();
+        ChannelWrapper channelWrapper = channelsByService.get(serviceName).get(index);
+        System.out.println("Load balance:" + loadbalance + "; Selected endpoint: " + channelWrapper.toString());
+        return channelWrapper.getChannel();
     }
 
     private ChannelWrapper connect(String host,int port) throws Exception {
@@ -120,6 +122,11 @@ public class ConnectManager implements IConnectManager,IEventCallback{
 
         public Channel getChannel() {
             return channel;
+        }
+
+        @Override
+        public String toString() {
+            return endpoint.getHost() + ":" + endpoint.getPort();
         }
     }
 }

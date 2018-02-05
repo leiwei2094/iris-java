@@ -1,5 +1,6 @@
 package com.leibangzhu.iris.springboot;
 
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class ClientTest {
     @Autowired
     private Foo foo;
 
+    @Ignore
     @Test
     public void test() throws Exception {
         System.out.println("==tom==");
