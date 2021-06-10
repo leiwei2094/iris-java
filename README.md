@@ -1,3 +1,7 @@
+> [招人了]    
+> 我目前任职于杭州信公小安架构师。技术团队正在招人，有兴趣的朋友可以联系我。微信号：leiwei2094    
+> [招人了]        
+
 # iris
 
 一个基于Java的RPC框架。目前可以看成是mini版的Dubbo。有注册中心，提供服务的注册，发现和负载均衡。
@@ -9,7 +13,7 @@
 * 可以脱离Spring，提供API调用。
 * 集成Spring，提供XML，Java配置
 * 提供Spring Boot Starter
-* 提供SPI机制，实现微内核加插件的架构。实现可扩展，开发者可以为iris开发组件，以插件的形式集成到iris中。插件的加载使用另一个微容器框架见[coco](https://github.com/Leo-Lei/coco)项目。该项目fork于阿里的[cooma](https://github.com/alibaba/cooma)。
+* 提供SPI机制，实现微内核加插件的架构。实现可扩展，开发者可以为iris开发组件，以插件的形式集成到iris中。插件的加载使用另一个微容器框架见[coco](https://github.com/vangoleo/coco)项目。该项目fork于阿里的[cooma](https://github.com/alibaba/cooma)。
 
 # Todo:
 * 支持优雅停机，不依赖Spring和Web容器。
