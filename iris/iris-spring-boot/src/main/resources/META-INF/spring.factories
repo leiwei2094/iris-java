@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.leibangzhu.iris.springboot.config.IrisAutoConfiguration
+com.leiwei2094.iris.springboot.config.IrisAutoConfiguration

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>iris-parent</artifactId>
-        <groupId>com.leibangzhu</groupId>
+        <groupId>com.leiwei2094</groupId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../iris-parent/pom.xml</relativePath>
     </parent>
@@ -14,7 +14,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.leibangzhu</groupId>
+            <groupId>com.leiwei2094</groupId>
             <artifactId>iris-protocol</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -23,7 +23,7 @@
             <artifactId>netty-all</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.leibangzhu</groupId>
+            <groupId>com.leiwei2094</groupId>
             <artifactId>iris-registry</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
@@ -32,7 +32,7 @@
             <artifactId>junit</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.leibangzhu</groupId>
+            <groupId>com.leiwei2094</groupId>
             <artifactId>iris-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

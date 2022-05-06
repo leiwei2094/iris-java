@@ -8,17 +8,17 @@
     <context:annotation-config></context:annotation-config>
     <context:property-placeholder location="classpath:/iris.properties"></context:property-placeholder>
 
-    <bean id="registry" class="com.leibangzhu.iris.registry.EtcdRegistry">
+    <bean id="registry" class="com.leiwei2094.iris.registry.EtcdRegistry">
         <constructor-arg name="registryAddress" value="http://127.0.0.1:2379"></constructor-arg>
     </bean>
 
-    <bean id="server" class="com.leibangzhu.iris.server.RpcServer">
+    <bean id="server" class="com.leiwei2094.iris.server.RpcServer">
         <constructor-arg name="registry" ref="registry"></constructor-arg>
     </bean>
 
-    <bean id="serviceAnnotationBeanPostProcessor" class="com.leibangzhu.iris.spring.ServiceAnnotationBeanPostProcessor"></bean>
+    <bean id="serviceAnnotationBeanPostProcessor" class="com.leiwei2094.iris.spring.ServiceAnnotationBeanPostProcessor"></bean>
 
-    <bean id="helloService" class="com.leibangzhu.iris.spring.HelloService"></bean>
+    <bean id="helloService" class="com.leiwei2094.iris.spring.HelloService"></bean>
     <!-- more bean definitions go here -->
 
 </beans>
