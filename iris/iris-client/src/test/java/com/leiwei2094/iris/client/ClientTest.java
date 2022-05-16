@@ -31,7 +31,7 @@ public class ClientTest {
 
                 System.out.println("==== rpc invoke finished...");
                 Thread.sleep(2 * 1000);
-            }catch (Exception e){
+            } catch (Exception e){
                 e.printStackTrace();
             }
         },5,3, TimeUnit.SECONDS);
