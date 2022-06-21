@@ -20,7 +20,6 @@ public class ConnectManager implements IConnectManager,IEventCallback{
 
     private IRegistry registry;
     private EventLoopGroup eventLoopGroup = new NioEventLoopGroup(4);
-    private AtomicInteger roundRobin = new AtomicInteger(0);
     private Map<String,List<ChannelWrapper>> channelsByService = new LinkedHashMap<>();
 
     public ConnectManager(IRegistry registry){
@@ -28,6 +27,7 @@ public class ConnectManager implements IConnectManager,IEventCallback{
         this.registry.watch(this);
     }
 
+    @Override
     public Channel getChannel(String serviceName) throws Exception {
         if (!channelsByService.containsKey(serviceName)){
             List<Endpoint> endpoints = registry.find(serviceName);
@@ -44,7 +44,7 @@ public class ConnectManager implements IConnectManager,IEventCallback{
         if ( 0 == size){
             System.out.println("NO available providers for service: " + serviceName);
         }
-        //int index = (roundRobin.getAndAdd(1) + size) % size;
+
         String loadbalance = IrisConfig.get("iris.loadbalance");
         Map<String,String> map = new LinkedHashMap<>();
         map.put("loadbalance",loadbalance);
