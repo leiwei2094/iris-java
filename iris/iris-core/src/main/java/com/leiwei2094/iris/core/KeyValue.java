@@ -1,5 +1,8 @@
 package com.leiwei2094.iris.core;
 
+/**
+ * @author wei.lei
+ */
 public class KeyValue<K,V> {
     private K key;
     private V value;

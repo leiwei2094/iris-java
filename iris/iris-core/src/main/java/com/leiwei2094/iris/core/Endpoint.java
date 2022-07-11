@@ -1,6 +1,7 @@
 package com.leiwei2094.iris.core;
 
 /**
+ * @author wei.lei
  * 代表一个RPC示例，包含主机和端口
  */
 public class Endpoint {

@@ -5,6 +5,9 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * @author wei.lei
+ */
 public class IrisConfig {
 
     private static Map<String,String> configs = new LinkedHashMap<>();
