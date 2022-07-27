@@ -5,4 +5,4 @@ iris-spring-boot/target
 iris-protocol/target
 iris-registry/target
 iris-server/target
-
+.flattened-pom.xml
