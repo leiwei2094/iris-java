@@ -31,10 +31,10 @@ public class ClientTest {
 
                 System.out.println("==== rpc invoke finished...");
                 Thread.sleep(2 * 1000);
-            } catch (Exception e){
+            } catch (Exception e) {
                 e.printStackTrace();
             }
-        },5,3, TimeUnit.SECONDS);
+        }, 5, 3, TimeUnit.SECONDS);
 
         Thread.sleep(3000 * 1000);
     }
@@ -44,7 +44,8 @@ public class ClientTest {
         IRegistry registry = new EtcdRegistry("http://127.0.0.1:2379");
         RpcClient client = new RpcClient(registry);
 
-        com.leiwei2094.iris.core.IHelloService helloService = client.create(com.leiwei2094.iris.core.IHelloService.class);
+        com.leiwei2094.iris.core.IHelloService helloService =
+            client.create(com.leiwei2094.iris.core.IHelloService.class);
         String s = helloService.hello("Hello");
         System.out.println(s);
     }

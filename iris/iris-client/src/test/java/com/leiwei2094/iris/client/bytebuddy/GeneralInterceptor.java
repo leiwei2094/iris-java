@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 public class GeneralInterceptor {
 
     @RuntimeType
-    public String intercept(@AllArguments Object[] allArguments, @Origin Method method){
+    public String intercept(@AllArguments Object[] allArguments, @Origin Method method) {
         String name = method.getDeclaringClass().getName();
         System.out.println(name + "." + method.getName());
         return "";

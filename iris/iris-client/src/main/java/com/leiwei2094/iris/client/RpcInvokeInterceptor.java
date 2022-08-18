@@ -13,7 +13,7 @@ public class RpcInvokeInterceptor {
 
     private IConnectManager connectManager;
 
-    public RpcInvokeInterceptor(IConnectManager connectManager){
+    public RpcInvokeInterceptor(IConnectManager connectManager) {
         this.connectManager = connectManager;
     }
 
@@ -33,14 +33,14 @@ public class RpcInvokeInterceptor {
         // send the rpc request via the connect
 
         RpcFuture future = new RpcFuture();
-        RpcRequestHolder.put(request.getRequestId(),future);
+        RpcRequestHolder.put(request.getRequestId(), future);
 
         channel.writeAndFlush(request);
 
         Object result = null;
         try {
             result = future.get();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return result;

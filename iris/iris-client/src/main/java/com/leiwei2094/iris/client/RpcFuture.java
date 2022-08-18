@@ -4,7 +4,7 @@ import com.leiwei2094.iris.protocol.RpcResponse;
 
 import java.util.concurrent.*;
 
-public class RpcFuture implements Future<Object>{
+public class RpcFuture implements Future<Object> {
     private CountDownLatch latch = new CountDownLatch(1);
 
     private RpcResponse response;
@@ -26,17 +26,17 @@ public class RpcFuture implements Future<Object>{
 
     @Override
     public Object get() throws InterruptedException, ExecutionException {
-        boolean b = latch.await(5,TimeUnit.SECONDS);
+        boolean b = latch.await(5, TimeUnit.SECONDS);
         return response.getResult();
     }
 
     @Override
     public Object get(long timeout, TimeUnit unit) throws InterruptedException, ExecutionException, TimeoutException {
-        boolean b = latch.await(timeout,unit);
+        boolean b = latch.await(timeout, unit);
         return response.getResult();
     }
 
-    public void done(RpcResponse response){
+    public void done(RpcResponse response) {
         this.response = response;
         latch.countDown();
     }
