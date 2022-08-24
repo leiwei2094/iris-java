@@ -5,7 +5,7 @@ import java.lang.annotation.*;
 /**
  * @author wei.lei
  */
-@Target({ ElementType.FIELD })
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Reference {

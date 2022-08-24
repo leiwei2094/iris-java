@@ -10,7 +10,7 @@ import java.util.Properties;
  */
 public class IrisConfig {
 
-    private static Map<String,String> configs = new LinkedHashMap<>();
+    private static Map<String, String> configs = new LinkedHashMap<>();
     private static boolean initialized = false;
 
     private static void load() throws Exception {
@@ -18,16 +18,16 @@ public class IrisConfig {
         Properties properties = new Properties();
         InputStream in = IrisConfig.class.getClassLoader().getResourceAsStream("iris.properties");
         properties.load(in);
-        for (Map.Entry<Object,Object> entry :  properties.entrySet()){
-            configs.put((String) entry.getKey(),(String) entry.getValue());
+        for (Map.Entry<Object, Object> entry : properties.entrySet()) {
+            configs.put((String)entry.getKey(), (String)entry.getValue());
         }
 
         // load from application.properties
         // ...
     }
 
-    public static String get(String key){
-        if (!initialized){
+    public static String get(String key) {
+        if (!initialized) {
             try {
                 load();
                 initialized = true;

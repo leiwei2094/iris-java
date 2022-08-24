@@ -7,5 +7,5 @@ import java.util.Map;
 
 @Extension(defaultValue = "random")
 public interface ILoadBalance {
-    int select(@Adaptive("loadbalance")Map<String,String> config,int amount) throws Exception;
+    int select(@Adaptive("loadbalance") Map<String, String> config, int amount) throws Exception;
 }
