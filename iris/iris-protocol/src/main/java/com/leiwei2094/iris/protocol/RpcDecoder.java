@@ -6,14 +6,16 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
-public class RpcDecoder extends ByteToMessageDecoder{
+public class RpcDecoder extends ByteToMessageDecoder {
     private Class<?> clazz;
-    public RpcDecoder(Class<?> clazz){
+
+    public RpcDecoder(Class<?> clazz) {
         this.clazz = clazz;
     }
 
     @Override
-    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list) throws Exception {
+    protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list)
+        throws Exception {
         if (byteBuf.readableBytes() < 4) {
             return;
         }

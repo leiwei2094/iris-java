@@ -6,7 +6,6 @@ public class RpcResponse {
     private String error;
     private Object result;
 
-
     public String getRequestId() {
         return requestId;
     }

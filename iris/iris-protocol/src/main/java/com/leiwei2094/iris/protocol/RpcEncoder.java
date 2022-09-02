@@ -7,13 +7,13 @@ import io.netty.handler.codec.MessageToByteEncoder;
 public class RpcEncoder extends MessageToByteEncoder {
     private Class<?> clazz;
 
-    public RpcEncoder(Class<?> clazz){
+    public RpcEncoder(Class<?> clazz) {
         this.clazz = clazz;
     }
 
     @Override
     protected void encode(ChannelHandlerContext channelHandlerContext, Object o, ByteBuf byteBuf) throws Exception {
-        if (clazz.isInstance(o)){
+        if (clazz.isInstance(o)) {
             byte[] data = SerializationUtil.serialize(o);
             byteBuf.writeInt(data.length);
             byteBuf.writeBytes(data);

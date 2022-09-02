@@ -12,14 +12,14 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class SerializationUtil {
 
-    private static Map<Class<?>,Schema<?>> cacheSchemas = new ConcurrentHashMap<>();
+    private static Map<Class<?>, Schema<?>> cacheSchemas = new ConcurrentHashMap<>();
     private static Objenesis objenesis = new ObjenesisStd(true);
 
-    private static <T> Schema<T> getSchema(Class<T> clazz){
-        Schema<T> schema = (Schema<T>) cacheSchemas.get(clazz);
-        if (null == schema){
+    private static <T> Schema<T> getSchema(Class<T> clazz) {
+        Schema<T> schema = (Schema<T>)cacheSchemas.get(clazz);
+        if (null == schema) {
             schema = RuntimeSchema.createFrom(clazz);
-            cacheSchemas.put(clazz,schema);
+            cacheSchemas.put(clazz, schema);
         }
         return schema;
     }
@@ -28,7 +28,7 @@ public class SerializationUtil {
      * 序列化 ( Java对象 -> 字节数组)
      */
     public static <T> byte[] serialize(T obj) {
-        Class<T> cls = (Class<T>) obj.getClass();
+        Class<T> cls = (Class<T>)obj.getClass();
         LinkedBuffer buffer = LinkedBuffer.allocate(LinkedBuffer.DEFAULT_BUFFER_SIZE);
         try {
             Schema<T> schema = getSchema(cls);
@@ -45,7 +45,7 @@ public class SerializationUtil {
      */
     public static <T> T deserialize(byte[] data, Class<T> cls) {
         try {
-            T message = (T) objenesis.newInstance(cls);
+            T message = (T)objenesis.newInstance(cls);
             Schema<T> schema = getSchema(cls);
             ProtostuffIOUtil.mergeFrom(data, message, schema);
             return message;
