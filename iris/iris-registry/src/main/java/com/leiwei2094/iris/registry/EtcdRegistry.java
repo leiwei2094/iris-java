@@ -21,24 +21,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
-public class EtcdRegistry implements IRegistry{
+public class EtcdRegistry implements IRegistry {
 
-    private String registryAddress = "http://127.0.0.1:2379";
     private final String rootPath = "iris";
+    private String registryAddress = "http://127.0.0.1:2379";
     private Lease lease;
     private KV kv;
     private Watch watch;
     private long leaseId;
 
-    private Map<String,List<Endpoint>> endpointsByService = new LinkedHashMap<>();
+    private Map<String, List<Endpoint>> endpointsByService = new LinkedHashMap<>();
     private IEventCallback callback;
 
     public EtcdRegistry(String registryAddress) throws Exception {
         this.registryAddress = registryAddress;
         Client client = Client.builder().endpoints(registryAddress).build();
-        this.lease   = client.getLeaseClient();
-        this.kv      = client.getKVClient();
-        this.watch   = client.getWatchClient();
+        this.lease = client.getLeaseClient();
+        this.kv = client.getKVClient();
+        this.watch = client.getWatchClient();
         this.leaseId = lease.grant(30).get().getID();
         //System.out.println("New lease, id:" + leaseId + ", Hex format: " + Long.toHexString(leaseId));
 //        keepAlive();
@@ -46,49 +46,53 @@ public class EtcdRegistry implements IRegistry{
     }
 
     // 向ETCD中注册服务
-    public void register(String serviceName,int port) throws Exception {
+    public void register(String serviceName, int port) throws Exception {
         // 服务注册的key为:    /iris/com.some.package.IHelloService/192.168.100.100:2000
-        String strKey = MessageFormat.format("/{0}/{1}/{2}:{3}",rootPath,serviceName,IpHelper.getHostIp(),String.valueOf(port));
+        String strKey =
+            MessageFormat.format("/{0}/{1}/{2}:{3}", rootPath, serviceName, IpHelper.getHostIp(), String.valueOf(port));
         ByteSequence key = ByteSequence.fromString(strKey);
         ByteSequence val = ByteSequence.fromString("");     // 目前只需要创建这个key,对应的value暂不使用,先留空
-        kv.put(key,val, PutOption.newBuilder().withLeaseId(leaseId).build()).get();
+        kv.put(key, val, PutOption.newBuilder().withLeaseId(leaseId).build()).get();
         System.out.println("Register a new service at:" + strKey);
     }
 
     // 发送心跳到ETCD,表明该host是活着的
-    public void keepAlive(){
+    public void keepAlive() {
         Executors.newSingleThreadExecutor().submit(
-                () -> {
-                    try {
-                        Lease.KeepAliveListener listener = lease.keepAlive(leaseId);
-                        listener.listen();
-                        System.out.println("KeepAlive lease:" + leaseId + "; Hex format:" + Long.toHexString(leaseId));
-                    } catch (Exception e) { e.printStackTrace(); }
+            () -> {
+                try {
+                    Lease.KeepAliveListener listener = lease.keepAlive(leaseId);
+                    listener.listen();
+                    System.out.println("KeepAlive lease:" + leaseId + "; Hex format:" + Long.toHexString(leaseId));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
+            }
         );
     }
 
     // 取消注册服务
-    public void unRegistered(String serviceName){
+    public void unRegistered(String serviceName) {
 
     }
 
     public List<Endpoint> find(String serviceName) throws Exception {
 
-        if(endpointsByService.containsKey(serviceName)){
+        if (endpointsByService.containsKey(serviceName)) {
             return endpointsByService.get(serviceName);
         }
 
-        String strKey = MessageFormat.format("/{0}/{1}",rootPath,serviceName);   //    /iris/com.leiwei2094.IHelloService
-        ByteSequence key  = ByteSequence.fromString(strKey);
+        String strKey =
+            MessageFormat.format("/{0}/{1}", rootPath, serviceName);   //    /iris/com.leiwei2094.IHelloService
+        ByteSequence key = ByteSequence.fromString(strKey);
         GetResponse response = kv.get(key, GetOption.newBuilder().withPrefix(key).build()).get();
 
         List<Endpoint> endpoints = new ArrayList<>();
 
-        for (KeyValue kv : response.getKvs()){
+        for (KeyValue kv : response.getKvs()) {
             String s = kv.getKey().toStringUtf8();
             int index = s.lastIndexOf("/");
-            String endpointStr = s.substring(index + 1,s.length());
+            String endpointStr = s.substring(index + 1, s.length());
 
             String host = endpointStr.split(":")[0];
             int port = Integer.valueOf(endpointStr.split(":")[1]);
@@ -96,9 +100,9 @@ public class EtcdRegistry implements IRegistry{
             //System.out.println(host);
             //System.out.println(port);
 
-            endpoints.add(new Endpoint(host,port));
+            endpoints.add(new Endpoint(host, port));
         }
-        endpointsByService.put(serviceName,endpoints);
+        endpointsByService.put(serviceName, endpoints);
         return endpoints;
     }
 
@@ -108,11 +112,11 @@ public class EtcdRegistry implements IRegistry{
         watch();
     }
 
-    private void watch(){
+    private void watch() {
         Watch.Watcher watcher = watch.watch(ByteSequence.fromString("/" + rootPath),
-                WatchOption.newBuilder().withPrefix(ByteSequence.fromString("/" + rootPath)).build());
+            WatchOption.newBuilder().withPrefix(ByteSequence.fromString("/" + rootPath)).build());
 
-        Executors.newSingleThreadExecutor().submit((Runnable) () -> {
+        Executors.newSingleThreadExecutor().submit((Runnable)() -> {
             while (true) {
                 try {
                     for (WatchEvent event : watcher.listen().getEvents()) {
@@ -129,15 +133,15 @@ public class EtcdRegistry implements IRegistry{
                         String host = endpoint.split(":")[0];
                         int port = Integer.valueOf(endpoint.split(":")[1]);
 
-                        endpointsByService.get(serviceName).remove(new Endpoint(host,port));
+                        endpointsByService.get(serviceName).remove(new Endpoint(host, port));
 
-                        if (null != callback){
+                        if (null != callback) {
                             RegistryEvent registryEvent = RegistryEvent
-                                    .newBuilder()
-                                    .eventType(RegistryEvent.EventType.valueOf(event.getEventType().toString()))
-                                    .key(event.getKeyValue().getKey().toStringUtf8())
-                                    .value(event.getKeyValue().getValue().toStringUtf8())
-                                    .build();
+                                .newBuilder()
+                                .eventType(RegistryEvent.EventType.valueOf(event.getEventType().toString()))
+                                .key(event.getKeyValue().getKey().toStringUtf8())
+                                .value(event.getKeyValue().getValue().toStringUtf8())
+                                .build();
 
                             callback.execute(registryEvent);
                         }

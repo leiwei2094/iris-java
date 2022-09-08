@@ -28,7 +28,7 @@ public class LeaseTest {
         ByteSequence value = ByteSequence.fromString("220");
 
         KV kv = client.getKVClient();
-        kv.put(key,value, PutOption.newBuilder().withLeaseId(leaseId).build());
+        kv.put(key, value, PutOption.newBuilder().withLeaseId(leaseId).build());
     }
 
     @Test
@@ -43,11 +43,11 @@ public class LeaseTest {
 
         KV kvClient = client.getKVClient();
 
-        for (int i = 0; i< 5;i++){
+        for (int i = 0; i < 5; i++) {
             ByteSequence testKey = ByteSequence.fromString("abc_key_" + i);
             ByteSequence testVal = ByteSequence.fromString("abc_val_" + i);
 
-            kvClient.put(testKey,testVal,PutOption.newBuilder().withLeaseId(leaseId).build()).get();
+            kvClient.put(testKey, testVal, PutOption.newBuilder().withLeaseId(leaseId).build()).get();
             Thread.sleep(3000);
         }
     }
@@ -60,10 +60,12 @@ public class LeaseTest {
         long leaseId = lease.grant(20).get().getID();
         System.out.println("New lease, id:" + leaseId + ", Hex format: " + Long.toHexString(leaseId));
 
-        for (int i = 0;i <10;i++){
-            System.out.println("Time to alive before keep-alive: " + lease.timeToLive(leaseId, LeaseOption.DEFAULT).get().getTTl());
+        for (int i = 0; i < 10; i++) {
+            System.out.println(
+                "Time to alive before keep-alive: " + lease.timeToLive(leaseId, LeaseOption.DEFAULT).get().getTTl());
             lease.keepAlive(leaseId).listen();
-            System.out.println("Time to alive after  keep-alive: " + lease.timeToLive(leaseId, LeaseOption.DEFAULT).get().getTTl());
+            System.out.println(
+                "Time to alive after  keep-alive: " + lease.timeToLive(leaseId, LeaseOption.DEFAULT).get().getTTl());
             Thread.sleep(3000);
         }
     }

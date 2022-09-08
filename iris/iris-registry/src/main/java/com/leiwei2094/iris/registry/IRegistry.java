@@ -1,6 +1,5 @@
 package com.leiwei2094.iris.registry;
 
-
 import com.leiwei2094.iris.core.Endpoint;
 
 import java.util.List;

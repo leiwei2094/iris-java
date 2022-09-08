@@ -14,6 +14,6 @@ public class IpHelperTest {
         String ip = IpHelper.getHostIp();
         System.out.println(ip);
 
-        System.out.println(MessageFormat.format("a{0}b{1}c{2}","foo","bar",100));
+        System.out.println(MessageFormat.format("a{0}b{1}c{2}", "foo", "bar", 100));
     }
 }

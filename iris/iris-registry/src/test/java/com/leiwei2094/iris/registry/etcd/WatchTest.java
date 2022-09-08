@@ -16,7 +16,7 @@ public class WatchTest {
 
         Client client = Client.builder().endpoints("http://127.0.0.1:2379").build();
         Watch.Watcher watcher = client.getWatchClient().watch(ByteSequence.fromString("abc"),
-                WatchOption.newBuilder().withPrefix(ByteSequence.fromString("abc")).build());
+            WatchOption.newBuilder().withPrefix(ByteSequence.fromString("abc")).build());
 
         while (true) {
             for (WatchEvent event : watcher.listen().getEvents()) {

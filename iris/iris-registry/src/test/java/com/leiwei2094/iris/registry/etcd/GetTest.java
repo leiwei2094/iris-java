@@ -20,17 +20,17 @@ public class GetTest {
         String prefix = "test_key";
         ByteSequence key = ByteSequence.fromString(prefix);
 
-        for (int i = 0; i< 5;i++){
+        for (int i = 0; i < 5; i++) {
             ByteSequence testKey = ByteSequence.fromString("test_key_" + i);
             ByteSequence testVal = ByteSequence.fromString("test_val_" + i);
 
-            kvClient.put(testKey,testVal).get();
+            kvClient.put(testKey, testVal).get();
         }
 
         ByteSequence dsfs = ByteSequence.fromString("dsfs");
         GetResponse response = kvClient.get(dsfs, GetOption.newBuilder().withPrefix(key).build()).get();
 
-        for (KeyValue kv : response.getKvs()){
+        for (KeyValue kv : response.getKvs()) {
             System.out.println(kv.getKey().toStringUtf8() + " : " + kv.getValue().toStringUtf8());
         }
     }
