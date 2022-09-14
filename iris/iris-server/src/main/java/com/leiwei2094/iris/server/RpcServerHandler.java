@@ -8,12 +8,12 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import java.lang.reflect.Method;
 import java.util.Map;
 
-public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest>{
+public class RpcServerHandler extends SimpleChannelInboundHandler<RpcRequest> {
 
     // key: com.some.package.IHelloService    value: new HelloService();
-    private final Map<String,Object> handlerMap;
+    private final Map<String, Object> handlerMap;
 
-    public RpcServerHandler(Map<String,Object> handlerMap){
+    public RpcServerHandler(Map<String, Object> handlerMap) {
         this.handlerMap = handlerMap;
     }
 

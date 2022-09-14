@@ -18,21 +18,21 @@ public class RpcServer {
     private IRegistry registry;
     private int port = 2017;
 
-    private Map<String,Object> handlerMap = new LinkedHashMap<>();
+    private Map<String, Object> handlerMap = new LinkedHashMap<>();
 
-    public RpcServer(IRegistry registry){
+    public RpcServer(IRegistry registry) {
         this.registry = registry;
     }
 
-    public RpcServer exposeService(Class<?> clazz,Object handler) throws Exception {
-        handlerMap.put(clazz.getName(),handler);
+    public RpcServer exposeService(Class<?> clazz, Object handler) throws Exception {
+        handlerMap.put(clazz.getName(), handler);
 //        registry.register(clazz.getName(),port);
         registry.keepAlive();
 
         return this;
     }
 
-    public RpcServer port(int port){
+    public RpcServer port(int port) {
         this.port = port;
         return this;
     }
@@ -44,11 +44,11 @@ public class RpcServer {
             EventLoopGroup workerGroup = new NioEventLoopGroup();
 
             ServerBootstrap bootstrap = new ServerBootstrap()
-                    .group(bossGroup,workerGroup)
-                    .channel(NioServerSocketChannel.class)
-                    .childHandler(new RpcServerInitializer(handlerMap))
-                    .option(ChannelOption.SO_BACKLOG,128)
-                    .childOption(ChannelOption.SO_KEEPALIVE,true);
+                .group(bossGroup, workerGroup)
+                .channel(NioServerSocketChannel.class)
+                .childHandler(new RpcServerInitializer(handlerMap))
+                .option(ChannelOption.SO_BACKLOG, 128)
+                .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture future = null;
             try {
                 future = bootstrap.bind(port).sync();
@@ -56,9 +56,9 @@ public class RpcServer {
                 e.printStackTrace();
             }
 
-            for (String className : handlerMap.keySet()){
+            for (String className : handlerMap.keySet()) {
                 try {
-                    registry.register(className,port);
+                    registry.register(className, port);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -69,7 +69,6 @@ public class RpcServer {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         });
     }
 }
