@@ -9,7 +9,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import java.lang.reflect.Field;
 
-public class ReferenceAnnotationBeanPostProcessor implements BeanPostProcessor,ApplicationContextAware{
+public class ReferenceAnnotationBeanPostProcessor implements BeanPostProcessor, ApplicationContextAware {
     private ApplicationContext applicationContext;
 
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
@@ -19,13 +19,13 @@ public class ReferenceAnnotationBeanPostProcessor implements BeanPostProcessor,A
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         Class<?> beanClass = bean.getClass();
         Field[] fields = beanClass.getDeclaredFields();
-        for (int i =0;i<fields.length;i++){
+        for (int i = 0; i < fields.length; i++) {
             Field field = fields[i];
-            if (field.isAnnotationPresent(Reference.class)){
+            if (field.isAnnotationPresent(Reference.class)) {
                 Reference reference = field.getAnnotation(Reference.class);
                 field.setAccessible(true);
                 try {
-                    field.set(bean,applicationContext.getBean(RpcClient.class).create(reference.interfaceClass()));
+                    field.set(bean, applicationContext.getBean(RpcClient.class).create(reference.interfaceClass()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
