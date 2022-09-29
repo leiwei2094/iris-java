@@ -17,8 +17,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableConfigurationProperties({RegistryProperties.class,ServerProperties.class})
+@EnableConfigurationProperties({RegistryProperties.class, ServerProperties.class})
 public class IrisAutoConfiguration {
+
+    @ConditionalOnProperty(prefix = "iris.server", value = "enable", havingValue = "true")
+    @Bean
+    public static ServiceAnnotationBeanFactoryPostProcessor beanFactoryPostProcessor(
+        @Value("${iris.annotation.package}") String packageName) {
+        ServiceAnnotationBeanFactoryPostProcessor processor =
+            new ServiceAnnotationBeanFactoryPostProcessor(packageName);
+        return processor;
+    }
 
     @Bean
     public IRegistry registry(RegistryProperties properties) throws Exception {
@@ -26,45 +35,38 @@ public class IrisAutoConfiguration {
         return registry;
     }
 
-    @ConditionalOnProperty(prefix = "iris.server", value = "enable",havingValue = "true")
+    @ConditionalOnProperty(prefix = "iris.server", value = "enable", havingValue = "true")
     @Bean
-    public RpcServer rpcServer(IRegistry registry, ServerProperties properties){
+    public RpcServer rpcServer(IRegistry registry, ServerProperties properties) {
         RpcServer server = new RpcServer(registry);
         server.port(properties.getPort());
         return server;
     }
 
-    @ConditionalOnProperty(prefix = "iris.server", value = "enable",havingValue = "true")
+    @ConditionalOnProperty(prefix = "iris.server", value = "enable", havingValue = "true")
     @Bean
-    public static ServiceAnnotationBeanFactoryPostProcessor beanFactoryPostProcessor(@Value("${iris.annotation.package}") String packageName){
-        ServiceAnnotationBeanFactoryPostProcessor processor = new ServiceAnnotationBeanFactoryPostProcessor(packageName);
-        return processor;
-    }
-
-    @ConditionalOnProperty(prefix = "iris.server", value = "enable",havingValue = "true")
-    @Bean
-    public ServiceAnnotationBeanPostProcessor serviceAnnotationBeanPostProcessor(){
+    public ServiceAnnotationBeanPostProcessor serviceAnnotationBeanPostProcessor() {
         ServiceAnnotationBeanPostProcessor processor = new ServiceAnnotationBeanPostProcessor();
         return processor;
     }
 
-    @ConditionalOnProperty(prefix = "iris.client", value = "enable",havingValue = "true")
+    @ConditionalOnProperty(prefix = "iris.client", value = "enable", havingValue = "true")
     @Bean
-    public ReferenceAnnotationBeanPostProcessor referenceAnnotationBeanPostProcessor(){
+    public ReferenceAnnotationBeanPostProcessor referenceAnnotationBeanPostProcessor() {
         ReferenceAnnotationBeanPostProcessor processor = new ReferenceAnnotationBeanPostProcessor();
         return processor;
     }
 
-    @ConditionalOnProperty(prefix = "iris.server", value = "enable",havingValue = "true")
+    @ConditionalOnProperty(prefix = "iris.server", value = "enable", havingValue = "true")
     @Bean
-    public IrisApplicationListener applicationListener(){
+    public IrisApplicationListener applicationListener() {
         IrisApplicationListener applicationListener = new IrisApplicationListener();
         return applicationListener;
     }
 
-    @ConditionalOnProperty(prefix = "iris.client", value = "enable",havingValue = "true")
+    @ConditionalOnProperty(prefix = "iris.client", value = "enable", havingValue = "true")
     @Bean
-    public RpcClient client(IRegistry registry){
+    public RpcClient client(IRegistry registry) {
         RpcClient client = new RpcClient(registry);
         return client;
     }

@@ -7,18 +7,18 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-public class ServiceAnnotationBeanFactoryPostProcessor implements BeanFactoryPostProcessor,ApplicationContextAware {
+public class ServiceAnnotationBeanFactoryPostProcessor implements BeanFactoryPostProcessor, ApplicationContextAware {
 
     private ApplicationContext applicationContext;
     private String scanBasePackage;
 
-    public ServiceAnnotationBeanFactoryPostProcessor(String scanBasePackage){
+    public ServiceAnnotationBeanFactoryPostProcessor(String scanBasePackage) {
         this.scanBasePackage = scanBasePackage;
     }
 
     @Override
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        ServiceAnnotationScanner scanner = new ServiceAnnotationScanner((BeanDefinitionRegistry) beanFactory);
+        ServiceAnnotationScanner scanner = new ServiceAnnotationScanner((BeanDefinitionRegistry)beanFactory);
         scanner.setResourceLoader(this.applicationContext);
         scanner.scan(scanBasePackage);
     }

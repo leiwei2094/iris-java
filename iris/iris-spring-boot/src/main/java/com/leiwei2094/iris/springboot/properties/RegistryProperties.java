@@ -2,7 +2,6 @@ package com.leiwei2094.iris.springboot.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-
 @ConfigurationProperties(prefix = "iris.registry")
 public class RegistryProperties {
 
